@@ -1,0 +1,116 @@
+// Importazione delle librerie necessarie per lo sviluppo dell'applicazione in Kotlin
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+
+class CalcolatriceActivity : AppCompatActivity() {
+
+    // Dichiarazione delle variabili per gestire l'interfaccia utente
+    private lateinit var display: TextView
+    private var inputStringBuilder = StringBuilder()
+    private var operand1: Double = 0.0
+    private var operatore: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_calcolatrice)
+
+        // Collegamento delle variabili alle viste nell'interfaccia utente
+        display = findViewById(R.id.display)
+
+        // Inizializzazione dei pulsanti numerici e degli operatori
+        val btn0: Button = findViewById(R.id.btn0)
+        val btn1: Button = findViewById(R.id.btn1)
+        val btn2: Button = findViewById(R.id.btn2)
+        val btn3: Button = findViewById(R.id.btn3)
+        val btn4: Button = findViewById(R.id.btn4)
+        val btn5: Button = findViewById(R.id.btn5)
+        val btn6: Button = findViewById(R.id.btn6)
+        val btn7: Button = findViewById(R.id.btn7)
+        val btn8: Button = findViewById(R.id.btn8)
+        val btn9: Button = findViewById(R.id.btn9)
+        val btnPunto: Button = findViewById(R.id.btnPunto)
+        val btnC: Button = findViewById(R.id.btnC)
+        val btnSomma: Button = findViewById(R.id.btnSomma)
+        val btnSottrazione: Button = findViewById(R.id.btnSottrazione)
+        val btnMoltiplicazione: Button = findViewById(R.id.btnMoltiplicazione)
+        val btnDivisione: Button = findViewById(R.id.btnDivisione)
+        val btnUguale: Button = findViewById(R.id.btnUguale)
+
+        // Gestione dei clic sui pulsanti numerici
+        btn0.setOnClickListener { aggiungiCifra("0") }
+        btn1.setOnClickListener { aggiungiCifra("1") }
+        btn2.setOnClickListener { aggiungiCifra("2") }
+        btn3.setOnClickListener { aggiungiCifra("3") }
+        btn4.setOnClickListener { aggiungiCifra("4") }
+        btn5.setOnClickListener { aggiungiCifra("5") }
+        btn6.setOnClickListener { aggiungiCifra("6") }
+        btn7.setOnClickListener { aggiungiCifra("7") }
+        btn8.setOnClickListener { aggiungiCifra("8") }
+        btn9.setOnClickListener { aggiungiCifra("9") }
+        btnPunto.setOnClickListener { aggiungiCifra(".") }
+
+        // Gestione dei clic sugli operatori
+        btnSomma.setOnClickListener { gestisciOperatore("+") }
+        btnSottrazione.setOnClickListener { gestisciOperatore("-") }
+        btnMoltiplicazione.setOnClickListener { gestisciOperatore("*") }
+        btnDivisione.setOnClickListener { gestisciOperatore("/") }
+
+        // Gestione del clic sul pulsante di cancellazione
+        btnC.setOnClickListener { cancellaInput() }
+
+        // Gestione del clic sul pulsante di uguaglianza
+        btnUguale.setOnClickListener { calcolaRisultato() }
+    }
+
+    // Funzione per aggiungere una cifra o un punto all'input
+    private fun aggiungiCifra(cifra: String) {
+        inputStringBuilder.append(cifra)
+        aggiornaDisplay()
+    }
+
+    // Funzione per gestire gli operatori
+    private fun gestisciOperatore(operator: String) {
+        if (inputStringBuilder.isNotEmpty()) {
+            operand1 = inputStringBuilder.toString().toDouble()
+            operatore = operator
+            inputStringBuilder.clear()
+        }
+    }
+
+    // Funzione per cancellare l'input
+    private fun cancellaInput() {
+        inputStringBuilder.clear()
+        aggiornaDisplay()
+    }
+
+    // Funzione per calcolare il risultato
+    private fun calcolaRisultato() {
+        if (operatore != null && inputStringBuilder.isNotEmpty()) {
+            val operand2 = inputStringBuilder.toString().toDouble()
+            var risultato = 0.0
+
+            when (operatore) {
+                "+" -> risultato = operand1 + operand2
+                "-" -> risultato = operand1 - operand2
+                "*" -> risultato = operand1 * operand2
+                "/" -> risultato = operand1 / operand2
+            }
+
+            // Mostra il risultato sul display
+            display.text = risultato.toString()
+
+            // Resetta le variabili
+            operand1 = risultato
+            operatore = null
+            inputStringBuilder.clear()
+        }
+    }
+
+    // Funzione per aggiornare il testo sul display
+    private fun aggiornaDisplay() {
+        display.text = inputStringBuilder.toString()
+    }
+}
