@@ -14,15 +14,7 @@ class CalcolatriceActivity : AppCompatActivity() {
     private var operatore: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_calcolatrice)
-
-        // Collegamento delle variabili alle viste nell'interfaccia utente
-        display = findViewById(R.id.display)
-
-        // Inizializzazione dei pulsanti numerici e degli operatori
-        val btn0: Button = findViewById(R.id.btn0)
-        val btn1: Button = findViewById(R.id.btn1)
+        super.onCreate(sav
         val btn2: Button = findViewById(R.id.btn2)
         val btn3: Button = findViewById(R.id.btn3)
         val btn4: Button = findViewById(R.id.btn4)
